@@ -23,6 +23,8 @@ function convertToString (v) {
       return ret
     } else if (BN.isBN(v) || (v.constructor && v.constructor.name === 'BigNumber')) {
       return v.toString(10)
+    } else if (v._isBigNumber === true) {
+      return toInt(v._hex)
     } else if (v._isBuffer) {
       return bufferToHex(v)
     } else if (typeof v === 'object') {
