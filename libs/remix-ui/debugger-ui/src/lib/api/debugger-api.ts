@@ -14,9 +14,7 @@ export const DebuggerApiMixin = (Base) => class extends Base {
     const self = this
     this.web3Provider = {
       sendAsync (payload, callback) {
-        self.call('web3Provider', 'sendAsync', payload)
-          .then(result => callback(null, result))
-          .catch(e => callback(e))
+        return self.call('web3Provider', 'sendAsync', payload)
       }
     }
     this._web3 = new Web3(this.web3Provider)
@@ -163,7 +161,7 @@ export const DebuggerApiMixin = (Base) => class extends Base {
     else this._web3 = this.initialWeb3
     init.extendWeb3(this._web3)
     if (this.onDebugRequestedListener) {
-      this.onDebugRequestedListener(hash, web3).then((debuggerBackend) => {
+      this.onDebugRequestedListener(hash, this._web3).then((debuggerBackend) => {
         this.debuggerBackend = debuggerBackend
       })
     }

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-use-before-define
 import React, {SyntheticEvent, useEffect, useState} from 'react'
-import {FileType} from '../types'
+import {FileType, WorkspaceElement} from '../types'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {TreeView, TreeViewItem} from '@remix-ui/tree-view'
 import {getPathIcon} from '@remix-ui/helper'
@@ -8,12 +8,13 @@ import {getPathIcon} from '@remix-ui/helper'
 import {FileLabel} from './file-label'
 import {fileDecoration, FileDecorationIcons} from '@remix-ui/file-decorators'
 import {Draggable} from '@remix-ui/drag-n-drop'
+import { fileKeySort } from '../utils'
 
 export interface RenderFileProps {
   file: FileType
   index: number
   focusEdit: {element: string; type: string; isNew: boolean; lastEdit: string}
-  focusElement: {key: string; type: 'file' | 'folder' | 'gist'}[]
+  focusElement: {key: string; type: WorkspaceElement}[]
   focusContext: {element: string; x: number; y: number; type: string}
   ctrlKey: boolean
   expandPath: string[]
@@ -24,12 +25,14 @@ export interface RenderFileProps {
   handleClickFile: (path: string, type: string) => void
   handleContextMenu: (pageX: number, pageY: number, path: string, content: string, type: string) => void
   fileDecorations: fileDecoration[]
+  dragStatus: boolean
 }
 
 export const FileRender = (props: RenderFileProps) => {
   const [file, setFile] = useState<FileType>({} as FileType)
   const [hover, setHover] = useState<boolean>(false)
   const [icon, setIcon] = useState<string>('')
+  const [childrenKeys, setChildrenKeys] = useState<string[]>([])
 
   useEffect(() => {
     if (props.file && props.file.path && props.file.type) {
@@ -37,6 +40,19 @@ export const FileRender = (props: RenderFileProps) => {
       setIcon(getPathIcon(props.file.path))
     }
   }, [props.file])
+
+  useEffect(() => {
+    if (file.child) {
+      try {
+        const children: FileType[] = file.child as any
+        setChildrenKeys(fileKeySort(children))
+      } catch (e) {
+        setChildrenKeys(Object.keys(file.child))
+      }
+    } else {
+      setChildrenKeys([])
+    }
+  }, [file.child, props.expandPath, props.file])
 
   const labelClass =
     props.focusEdit.element === file.path
@@ -92,7 +108,7 @@ export const FileRender = (props: RenderFileProps) => {
           <>
             <Draggable isDraggable={props.focusEdit.element !== null} file={file} expandedPath={props.expandPath} handleClickFolder={props.handleClickFolder}>
               <div className="d-flex flex-row">
-                <FileLabel fileDecorations={props.fileDecorations} file={file} focusEdit={props.focusEdit} editModeOff={props.editModeOff} />
+                <FileLabel fileDecorations={props.fileDecorations} file={file} focusEdit={props.focusEdit} editModeOff={props.editModeOff} dragStatus={props.dragStatus} />
                 <FileDecorationIcons file={file} fileDecorations={props.fileDecorations} />
               </div>
             </Draggable>
@@ -108,7 +124,7 @@ export const FileRender = (props: RenderFileProps) => {
       >
         {file.child ? (
           <TreeView id={`treeView${file.path}`} key={`treeView${file.path}`} {...spreadProps}>
-            {Object.keys(file.child).map((key, index) => (
+            {childrenKeys.map((key, index) => (
               <FileRender
                 file={file.child[key]}
                 fileDecorations={props.fileDecorations}
@@ -123,6 +139,7 @@ export const FileRender = (props: RenderFileProps) => {
                 handleContextMenu={props.handleContextMenu}
                 expandPath={props.expandPath}
                 key={index}
+                dragStatus={props.dragStatus}
               />
             ))}
           </TreeView>
@@ -140,7 +157,7 @@ export const FileRender = (props: RenderFileProps) => {
           <>
             <Draggable isDraggable={props.focusEdit.element !== null} file={file} expandedPath={props.expandPath} handleClickFolder={props.handleClickFolder}>
               <div className="d-flex flex-row">
-                <FileLabel fileDecorations={props.fileDecorations} file={file} focusEdit={props.focusEdit} editModeOff={props.editModeOff} />
+                <FileLabel fileDecorations={props.fileDecorations} file={file} focusEdit={props.focusEdit} editModeOff={props.editModeOff} dragStatus={props.dragStatus} />
                 <FileDecorationIcons file={file} fileDecorations={props.fileDecorations} />
               </div>
             </Draggable>

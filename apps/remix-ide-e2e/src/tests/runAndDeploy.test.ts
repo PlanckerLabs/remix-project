@@ -61,7 +61,7 @@ module.exports = {
       .click('*[data-id="Deploy - transact (not payable)"]')
       .pause(5000)
       .testFunction('last', {
-        status: 'true Transaction mined and execution succeed'
+        status: '0x1 Transaction mined and execution succeed'
       })
   },
 
@@ -95,7 +95,7 @@ module.exports = {
       .click('*[data-id="pluginManagerSettingsDeployAndRunLLTxSendTransaction"]')
       .pause(5000)
       .testFunction('last', {
-        status: 'true Transaction mined and execution succeed'
+        status: '0x1 Transaction mined and execution succeed'
       })
       // When this is removed and tests are running by connecting to metamask
       // Consider adding tests to check return value of contract call
@@ -235,7 +235,7 @@ const sources = [
       content:
       `
       pragma solidity ^0.8.0;
-      contract helloWorld {
+      contract HelloWorld {
           string public message;
           
           fallback () external {
@@ -249,7 +249,7 @@ const sources = [
     },
     'checkBalance.sol': {
       content: `pragma solidity ^0.8.0;
-      contract checkBalance {
+      contract CheckBalance {
         constructor () payable {}
 
         function sendSomeEther(uint256 num) public {

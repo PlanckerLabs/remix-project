@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-use-before-define
 import {fileDecoration} from '@remix-ui/file-decorators'
+import {CustomTooltip} from '@remix-ui/helper'
+import {FormattedMessage} from 'react-intl'
 import React, {useEffect, useRef, useState} from 'react'
 import {FileType} from '../types'
 export interface FileLabelProps {
@@ -12,6 +14,7 @@ export interface FileLabelProps {
   }
   fileDecorations: fileDecoration[]
   editModeOff: (content: string) => void
+  dragStatus: boolean
 }
 
 export const FileLabel = (props: FileLabelProps) => {
@@ -65,18 +68,29 @@ export const FileLabel = (props: FileLabelProps) => {
     labelRef.current.innerText = file.name
   }
 
+  // The tooltip is setted up on the label and not the whole line to avoid unnecessary tooltips on the short filenames.
+  // It has the delay for the same reason.
   return (
     <div
-      className="remixui_items d-inline-block w-100 text-break"
+      className="remixui_items d-inline-block w-100"
       ref={isEditable ? labelRef : null}
       suppressContentEditableWarning={true}
       contentEditable={isEditable}
       onKeyDown={handleEditInput}
       onBlur={handleEditBlur}
     >
-      <span className={`text-nowrap remixui_label ${fileStateClasses} ` + (file.isDirectory ? 'folder' : 'remixui_leaf')} data-path={file.path}>
-        {file.name}
-      </span>
+      <CustomTooltip
+        placement="top"
+        delay={{show: 1000, hide: 0}}
+        tooltipText={`${file.path}`}
+        tooltipId={`fileExplorer.${file.path}`}
+        tooltipClasses="text-nowrap"
+        hide={props.dragStatus}
+      >
+        <span className={`remixui_label ${fileStateClasses} ` + (file.isDirectory ? 'folder' : 'remixui_leaf')} data-path={file.path}>
+          {file.name}
+        </span>
+      </CustomTooltip>
     </div>
   )
 }
