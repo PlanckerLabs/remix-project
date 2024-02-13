@@ -1,0 +1,19 @@
+{
+  "name": "dapp-draft",
+  "displayName": "Dapp Draft",
+  "description": "Edit and deploy your own dapp!",
+  "version": "0.1.0",
+  "methods": [
+    "edit"
+  ],
+  "kind": "none",
+  "icon": "assets/img/learnEthLogo.webp",
+  "location": "mainPanel",
+  "url": "plugins/dapp-draft/index.html",
+  "repo": "https://github.com/ethereum/remix-project/tree/master/apps/dapp-draft",
+  "maintainedBy": "Remix",
+  "authorContact": "",
+  "targets": [
+    "remix"
+  ]
+}

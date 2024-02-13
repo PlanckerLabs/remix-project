@@ -1,0 +1,58 @@
+{
+  "name": "dapp-draft",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/dapp-draft/src",
+  "projectType": "application",
+  "implicitDependencies": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "development",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/dapp-draft",
+        "index": "apps/dapp-draft/src/index.html",
+        "baseHref": "./",
+        "main": "apps/dapp-draft/src/main.tsx",
+        "polyfills": "apps/dapp-draft/src/polyfills.ts",
+        "tsConfig": "apps/dapp-draft/tsconfig.app.json",
+        "assets": ["apps/dapp-draft/src/profile.json"],
+        "styles": ["apps/dapp-draft/src/index.css"],
+        "scripts": [],
+        "webpackConfig": "apps/dapp-draft/webpack.config.js"
+      },
+      "configurations": {
+        "development": {
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/dapp-draft/src/environments/environment.ts",
+              "with": "apps/dapp-draft/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "dapp-draft:build",
+        "hmr": true,
+        "baseHref": "/"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "dapp-draft:build:development",
+          "port": 2025
+        },
+        "production": {
+          "buildTarget": "dapp-draft:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
