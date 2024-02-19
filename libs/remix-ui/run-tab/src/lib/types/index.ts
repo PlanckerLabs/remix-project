@@ -101,6 +101,7 @@ export interface RunTabState {
     transactionCount: number
   }
   remixdActivated: boolean,
+  dappdraftActivated: boolean,
   proxy: {
     deployments: { address: string, date: string, contractName: string }[]
   },
@@ -315,7 +316,9 @@ export interface InstanceContainerProps {
   passphrasePrompt: (message: string) => JSX.Element,
   mainnetPrompt: (tx: Tx, network: Network, amount: string, gasEstimation: string, gasFees: (maxFee: string, cb: (txFeeText: string, priceStatus: boolean) => void) => void, determineGasPrice: (cb: (txFeeText: string, gasPriceValue: string, gasPriceStatus: boolean) => void) => void) => JSX.Element,
   sendValue: string,
-  getFuncABIInputs: (funcABI: FuncABI) => string
+  getFuncABIInputs: (funcABI: FuncABI) => string,
+  dappdraftActivated: boolean,
+  editInstance: (instance) => void
 }
 
 export interface Modal {
@@ -417,7 +420,9 @@ export interface UdappProps {
     passphrasePrompt: (msg: string) => JSX.Element,
     funcIndex?: number) => void,
   sendValue: string,
-  getFuncABIInputs: (funcABI: FuncABI) => string
+  getFuncABIInputs: (funcABI: FuncABI) => string,
+  dappdraftActivated: boolean
+  editInstance: (instance) => void
 }
 
 export interface DeployButtonProps {

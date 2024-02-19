@@ -2,7 +2,7 @@ import { envChangeNotification } from "@remix-ui/helper"
 import { RunTab } from "../types/run-tab"
 import { setExecutionContext, setFinalContext, updateAccountBalances, fillAccountsList } from "./account"
 import { addExternalProvider, addInstance, addNewProxyDeployment, removeExternalProvider, setNetworkNameFromProvider } from "./actions"
-import { addDeployOption, clearAllInstances, clearRecorderCount, fetchContractListSuccess, resetProxyDeployments, resetUdapp, setCurrentContract, setCurrentFile, setLoadType, setRecorderCount, setRemixDActivated, setSendValue, fetchAccountsListSuccess } from "./payload"
+import { addDeployOption, clearAllInstances, clearRecorderCount, fetchContractListSuccess, resetProxyDeployments, resetUdapp, setCurrentContract, setCurrentFile, setLoadType, setRecorderCount, setRemixDActivated, setDappDraftActivated, setSendValue, fetchAccountsListSuccess } from "./payload"
 import { updateInstanceBalance } from './deploy'
 import { CompilerAbstract } from '@remix-project/remix-solidity'
 import BN from 'bn.js'
@@ -95,11 +95,19 @@ export const setupEvents = (plugin: RunTab, dispatch: React.Dispatch<any>) => {
     if (plugin.name === 'remixd') {
       dispatch(setRemixDActivated(true))
     }
+
+    if (plugin.name === 'dapp-draft') {
+      dispatch(setDappDraftActivated(true))
+    }
   })
 
   plugin.on('manager', 'pluginDeactivated', (plugin: Plugin) => {
     if (plugin.name === 'remixd') {
       dispatch(setRemixDActivated(false))
+    }
+
+    if (plugin.name === 'dapp-draft') {
+      dispatch(setDappDraftActivated(false))
     }
   })
 
