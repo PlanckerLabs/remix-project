@@ -1,28 +1,30 @@
 import React, {useEffect} from 'react'
-import {createHashRouter, RouterProvider} from 'react-router-dom'
+import CreateInstance from './components/CreateInstance'
+import EditInstance from './components/EditInstance'
+import DeployPanel from './components/DeployPanel'
 import LoadingScreen from './components/LoadingScreen'
-import HomePage from './pages/Home'
-import {useAppDispatch} from './redux/hooks'
+import {useAppDispatch, useAppSelector} from './redux/hooks'
 import './App.css'
-
-export const router = createHashRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-])
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch()
+  const abi = useAppSelector((state) => state.instance.abi)
 
   useEffect(() => {
     dispatch({type: 'remixide/connect'})
   }, [])
   return (
-    <>
-      <RouterProvider router={router} />
+    <div>
+      {abi.length > 0 ? (
+        <div className="row m-0">
+          <EditInstance />
+          <DeployPanel />
+        </div>
+      ) : (
+        <CreateInstance />
+      )}
       <LoadingScreen />
-    </>
+    </div>
   )
 }
 

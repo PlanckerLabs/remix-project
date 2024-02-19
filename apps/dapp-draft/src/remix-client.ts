@@ -8,16 +8,15 @@ class RemixClient extends PluginClient {
     createClient(this)
   }
 
-  edit(address: string, abi: any, network: string, name: string): void {
+  edit({address, abi, network, name}): void {
     console.log('edit dapp', address, abi, network, name)
     store.dispatch({
-      type: 'instance/save',
+      type: 'instance/init',
       payload: {
         address,
         abi,
         network,
         name,
-        defaultAbi: abi,
       },
     })
   }

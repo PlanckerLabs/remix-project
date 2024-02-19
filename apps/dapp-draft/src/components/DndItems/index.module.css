@@ -1,0 +1,11 @@
+.Pages {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 0;
+
+  &.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+  }
+}

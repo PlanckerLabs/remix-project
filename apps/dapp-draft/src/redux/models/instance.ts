@@ -1,6 +1,9 @@
 import SurgeClient from 'surge-client'
 import axios from 'axios'
 import {type ModelType} from '../store'
+import {execution} from '@remix-project/remix-lib'
+
+const {encodeFunctionId} = execution.txHelper
 
 const surgeClient = new SurgeClient({
   proxy: 'http://127.0.0.1:3003',
@@ -22,6 +25,23 @@ const Model: ModelType = {
     save(state, {payload}) {
       return {...state, ...payload}
     },
+    init(state, {payload}) {
+      const abi = payload.abi.filter((item) => {
+        if (item.type === 'function') {
+          item.id = encodeFunctionId(item)
+          return true
+        } else {
+          return false
+        }
+      })
+      return {...state, ...payload, abi, defaultAbi: abi}
+    },
+    reset(state, _) {
+      return {...state, abi: state.defaultAbi}
+    },
+    empty(state, _) {
+      return {...state, abi: [], defaultAbi: []}
+    },
   },
   effects: {
     *deploy({payload}, {select}) {
@@ -31,16 +51,17 @@ const Model: ModelType = {
       })
       const {data} = yield axios.get('https://remix-dapp.surge.sh/manifest.json')
       const {file, css, assets} = data['index.html']
-      const paths = ['index.html', file, ...css, ...assets]
+      const paths = [file, ...css, ...assets]
 
       const {defaultAbi, ...instance} = yield select((state) => state.instance)
 
-      const files: Record<string, string> = {'instance.json': JSON.stringify(instance)}
+      const files: Record<string, string> = {'dir/instance.json': JSON.stringify(instance), 'dir/index.html': (yield axios.get('https://remix-dapp.surge.sh/index.html')).data}
 
       for (let index = 0; index < paths.length; index++) {
         const path = paths[index]
-        const resp = yield axios.get(`https://remix-dapp.surge.sh/${path}`)
-        files[path] = resp.data
+        // const resp = yield axios.get(`https://remix-dapp.surge.sh/${path}`)
+        // files[`dir/${path}`] = resp.data
+        files['dir/index.html'] = files['dir/index.html'].replace(`/${path}`, `https://remix-dapp.surge.sh/${path}`)
       }
 
       yield surgeClient.publish({
