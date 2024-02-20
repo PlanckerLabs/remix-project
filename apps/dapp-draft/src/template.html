@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://remix.learnblockchain.cn/assets/css/themes/remix-dark_tvx1s2.css" id="theme-link">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remix Dapp</title>
+    <script src="https://kit.fontawesome.com/41dd021e94.js" crossorigin="anonymous"></script>
+    <script>
+      var oReq = new XMLHttpRequest();
+      oReq.addEventListener("load", function () {
+        const {file, css, assets} = JSON.parse(this.responseText)['index.html']
+        const paths = [file, ...css, ...assets]
+        for (let index = 0; index < paths.length; index++) {
+          const path = paths[index]
+          if (path.endsWith('js')) {
+            const ele = document.createElement("script");
+            ele.src = `https://remix-dapp.surge.sh/${path}`;
+            ele.type = 'module'
+            ele.crossOrigin = true
+            document.head.appendChild(ele);
+          }
+          if (path.endsWith('css')) {
+            const ele = document.createElement("link");
+            ele.href = `https://remix-dapp.surge.sh/${path}`;
+            ele.rel = 'stylesheet'
+            ele.crossOrigin = true
+            document.head.appendChild(ele);
+          }
+          if (path.endsWith('svg')) {
+            const ele = document.createElement("link");
+            ele.href = `https://remix-dapp.surge.sh/${path}`;
+            ele.rel = 'icon'
+            ele.type = 'image/svg+xml'
+            document.head.appendChild(ele);
+          }
+        }
+      });
+      oReq.open("GET", "https://remix-dapp.surge.sh/manifest.json");
+      oReq.send();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
