@@ -7,7 +7,7 @@ import template from 'raw-loader!../../template.html'
 const {encodeFunctionId} = execution.txHelper
 
 const surgeClient = new SurgeClient({
-  proxy: 'http://127.0.0.1:3003',
+  proxy: 'https://vercel-proxy-bice-six.vercel.app',
   onError: (err: Error) => {
     console.log(err)
   },
