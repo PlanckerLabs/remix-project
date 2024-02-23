@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Form} from 'react-bootstrap'
+import {Alert, Button, Form} from 'react-bootstrap'
 import {useAppDispatch} from '../../redux/hooks'
 
 const CreateInstance: React.FC = () => {
@@ -69,6 +69,12 @@ const CreateInstance: React.FC = () => {
       <Button variant="primary" type="submit" disabled={!formVal.address || !formVal.name || !formVal.network || !formVal.abi.length}>
         Submit
       </Button>
+      <Alert className="mt-4" variant="info">
+        Dapp Draft only work for Injected Provider currently. More providers will be adapted in further iterations.
+        <br />
+        Click the edit icon in a deployed contract will input the parameters automatically.
+      </Alert>
+      <img src="assets/edit-dapp.png" />
     </Form>
   )
 }

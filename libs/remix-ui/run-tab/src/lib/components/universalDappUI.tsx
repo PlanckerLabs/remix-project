@@ -241,7 +241,7 @@ export function UniversalDappUI(props: UdappProps) {
             <label>
               <FormattedMessage id="udapp.balance" />: {instanceBalance} ETH
             </label>
-            {props.dappdraftActivated && <i className="fas fa-edit btn btn-sm p-0" onClick={() => {props.editInstance(props.instance)}}></i>}
+            {props.dappdraftActivated && props.exEnvironment === 'injected' && <i className="fas fa-edit btn btn-sm p-0" onClick={() => {props.editInstance(props.instance)}}></i>}
           </div>
           {contractABI &&
             contractABI.map((funcABI, index) => {

@@ -21,7 +21,7 @@ function App(): JSX.Element {
           <DeployPanel />
         </div>
       ) : (
-        <div className="row m-0 pt-5">
+        <div className="row m-0 pt-3">
           <CreateInstance />
         </div>
       )}

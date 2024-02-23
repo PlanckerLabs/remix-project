@@ -318,6 +318,7 @@ export interface InstanceContainerProps {
   sendValue: string,
   getFuncABIInputs: (funcABI: FuncABI) => string,
   dappdraftActivated: boolean,
+  exEnvironment: string,
   editInstance: (instance) => void
 }
 
@@ -421,7 +422,8 @@ export interface UdappProps {
     funcIndex?: number) => void,
   sendValue: string,
   getFuncABIInputs: (funcABI: FuncABI) => string,
-  dappdraftActivated: boolean
+  dappdraftActivated: boolean,
+  exEnvironment: string,
   editInstance: (instance) => void
 }
 

@@ -7,7 +7,7 @@
     "edit"
   ],
   "kind": "none",
-  "icon": "assets/img/learnEthLogo.webp",
+  "icon": "assets/img/dappDraft.webp",
   "location": "mainPanel",
   "url": "plugins/dapp-draft/index.html",
   "repo": "https://github.com/ethereum/remix-project/tree/master/apps/dapp-draft",

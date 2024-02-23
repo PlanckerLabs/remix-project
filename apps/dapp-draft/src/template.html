@@ -7,6 +7,7 @@
     <title>Remix Dapp</title>
     <script src="https://kit.fontawesome.com/41dd021e94.js" crossorigin="anonymous"></script>
     <script>
+      var templateUrl = 'https://remix-dapp.pages.dev'
       var oReq = new XMLHttpRequest();
       oReq.addEventListener("load", function () {
         const {file, css, assets} = JSON.parse(this.responseText)['index.html']
@@ -15,28 +16,28 @@
           const path = paths[index]
           if (path.endsWith('js')) {
             const ele = document.createElement("script");
-            ele.src = `https://remix-dapp.surge.sh/${path}`;
+            ele.src = `${templateUrl}/${path}`;
             ele.type = 'module'
             ele.crossOrigin = true
             document.head.appendChild(ele);
           }
           if (path.endsWith('css')) {
             const ele = document.createElement("link");
-            ele.href = `https://remix-dapp.surge.sh/${path}`;
+            ele.href = `${templateUrl}/${path}`;
             ele.rel = 'stylesheet'
             ele.crossOrigin = true
             document.head.appendChild(ele);
           }
           if (path.endsWith('svg')) {
             const ele = document.createElement("link");
-            ele.href = `https://remix-dapp.surge.sh/${path}`;
+            ele.href = `${templateUrl}/${path}`;
             ele.rel = 'icon'
             ele.type = 'image/svg+xml'
             document.head.appendChild(ele);
           }
         }
       });
-      oReq.open("GET", "https://remix-dapp.surge.sh/manifest.json");
+      oReq.open("GET", `${templateUrl}/manifest.json`);
       oReq.send();
     </script>
   </head>

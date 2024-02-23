@@ -51,6 +51,7 @@ export function InstanceContainerUI(props: InstanceContainerProps) {
                 sendValue={props.sendValue}
                 getFuncABIInputs={props.getFuncABIInputs}
                 dappdraftActivated={props.dappdraftActivated}
+                exEnvironment={props.exEnvironment}
                 editInstance={props.editInstance}
               />
             )

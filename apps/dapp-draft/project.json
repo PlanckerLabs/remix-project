@@ -17,7 +17,7 @@
         "main": "apps/dapp-draft/src/main.tsx",
         "polyfills": "apps/dapp-draft/src/polyfills.ts",
         "tsConfig": "apps/dapp-draft/tsconfig.app.json",
-        "assets": ["apps/dapp-draft/src/profile.json"],
+        "assets": ["apps/dapp-draft/src/profile.json", "apps/dapp-draft/src/assets/edit-dapp.png"],
         "styles": ["apps/dapp-draft/src/index.css"],
         "scripts": [],
         "webpackConfig": "apps/dapp-draft/webpack.config.js"
@@ -40,6 +40,7 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "dapp-draft:build",
+        "assets": ["apps/dapp-draft/src/assets/edit-dapp.png"],
         "hmr": true,
         "baseHref": "/"
       },

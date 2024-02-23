@@ -323,6 +323,7 @@ export function RunTabUI(props: RunTabProps) {
             sendValue={runTab.sendValue}
             getFuncABIInputs={getFuncABIValues}
             dappdraftActivated={runTab.dappdraftActivated}
+            exEnvironment={runTab.selectExEnv}
             editInstance={(instance) => {
               plugin.call('dapp-draft', 'edit', {address: instance.address, abi: instance.contractData.abi, name: instance.name, network: runTab.networkName})
             }}

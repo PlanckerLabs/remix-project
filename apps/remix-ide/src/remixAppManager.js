@@ -89,7 +89,7 @@ let requiredModules = [ // services + layout views + system views
 // dependentModules shouldn't be manually activated (e.g hardhat is activated by remixd)
 const dependentModules = ['foundry', 'hardhat', 'truffle', 'slither']
 
-const loadLocalPlugins = ['doc-gen', 'doc-viewer', 'etherscan', 'vyper', 'solhint', 'walletconnect', 'circuit-compiler', 'learneth']
+const loadLocalPlugins = ['doc-gen', 'doc-viewer', 'etherscan', 'vyper', 'solhint', 'walletconnect', 'circuit-compiler', 'learneth', 'dapp-draft']
 
 const sensitiveCalls = {
   fileManager: ['writeFile', 'copyFile', 'rename', 'copyDir'],
@@ -388,7 +388,7 @@ class PluginLoader {
         localStorage.setItem('workspace', JSON.stringify(saved))
       },
       get: () => {
-        return JSON.parse(localStorage.getItem('workspace'))
+        return JSON.parse(localStorage.getItem('workspace')).filter(item => item !== 'dapp-draft')
       }
     }
 

@@ -27,6 +27,7 @@ function DeployPanel(): JSX.Element {
       <Form
         onSubmit={(e) => {
           e.preventDefault()
+          setDeployState({code: '', error: ''})
           dispatch({
             type: 'instance/deploy',
             payload: formVal,
@@ -87,6 +88,12 @@ function DeployPanel(): JSX.Element {
             {deployState.error}
           </Alert>
         )}
+        <Alert variant="info" className="mt-4">
+          Don't have a surge account? Click here to{' '}
+          <a target="_blank" href="https://surge.sh/help/getting-started-with-surge">
+            getting started with surge
+          </a>
+        </Alert>
       </Form>
     </div>
   )
