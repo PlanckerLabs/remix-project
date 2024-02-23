@@ -349,7 +349,7 @@
   justify-content: flex-end;
 }
 .udapp_contractProperty {
-  width:100%;
+  width:90%;
 }
 .udapp_contractProperty.udapp_hasArgs input {
   padding: .36em;

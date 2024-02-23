@@ -3,11 +3,10 @@ import {closestCenter, DndContext, DragOverlay, useSensor, useSensors, PointerSe
 import type {DragStartEvent, DragEndEvent, MeasuringConfiguration, UniqueIdentifier} from '@dnd-kit/core'
 import {arrayMove, useSortable, SortableContext, sortableKeyboardCoordinates} from '@dnd-kit/sortable'
 import {CSS, isKeyboardEvent} from '@dnd-kit/utilities'
-import classNames from 'classnames'
 
 import Item, {Position} from './Item'
 import type {Props as PageProps} from './Item'
-import styles from './index.module.css'
+import styles from './item.module.css'
 
 interface Props {
   items: any
@@ -56,7 +55,9 @@ export default function DndItems({items, setItems}: Props) {
           ))}
         </div>
       </SortableContext>
-      <DragOverlay dropAnimation={dropAnimation}>{activeId ? <ItemOverlay id={activeId} items={items} /> : null}</DragOverlay>
+      <DragOverlay style={{width: '100%'}} dropAnimation={dropAnimation}>
+        {activeId ? <ItemOverlay id={activeId} items={items} /> : null}
+      </DragOverlay>
     </DndContext>
   )
 
@@ -110,7 +111,7 @@ function SortableItem({item, activeIndex, ...props}: PageProps & {activeIndex: n
       insertPosition={over?.id === item.id ? (index > activeIndex ? Position.After : Position.Before) : undefined}
       {...props}
       {...attributes}
-      {...listeners}
+      listeners={listeners}
     />
   )
 }

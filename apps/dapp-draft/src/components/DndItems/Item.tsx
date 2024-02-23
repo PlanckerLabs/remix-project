@@ -1,9 +1,10 @@
 import React, {forwardRef, HTMLAttributes} from 'react'
-import type {UniqueIdentifier} from '@dnd-kit/core'
+import type {DraggableSyntheticListeners, UniqueIdentifier} from '@dnd-kit/core'
 import classNames from 'classnames'
 
 import styles from './item.module.css'
 import {ContractGUI} from '../ContractGUI'
+import {Handle} from './handle'
 
 export const removeIcon = (
   <svg width="10" height="10" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
@@ -30,14 +31,16 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, 'id'> {
   item: {id: UniqueIdentifier}
   index?: number
   onRemove?(id): void
+  listeners?: DraggableSyntheticListeners
 }
 
-const Item = forwardRef<HTMLDivElement, Props>(function Page({id, item, index, active, clone, insertPosition, onRemove, style, ...props}, ref) {
+const Item = forwardRef<HTMLDivElement, Props>(function Page({id, item, index, active, clone, insertPosition, onRemove, style, listeners, ...props}, ref) {
   return (
-    <div className={`col m-2 ${classNames(styles.Wrapper, active && styles.active, clone && styles.clone, insertPosition === Position.Before && styles.insertBefore, insertPosition === Position.After && styles.insertAfter)}`} style={style} ref={ref}>
+    <div className={`col-6 ${classNames(styles.Wrapper, active && styles.active, clone && styles.clone, insertPosition === Position.Before && styles.insertBefore, insertPosition === Position.After && styles.insertAfter)}`} style={style} ref={ref}>
       <div className={styles.Page} data-id={id.toString()} {...props}>
-        <div className="border-dark bg-light ">
+        <div className="border-dark bg-light d-flex">
           <ContractGUI funcABI={item} />
+          <Handle {...listeners} />
         </div>
       </div>
       {!active && onRemove ? (

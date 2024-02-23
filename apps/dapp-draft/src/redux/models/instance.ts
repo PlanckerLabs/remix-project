@@ -1,4 +1,4 @@
-import SurgeClient from 'surge-client'
+import SurgeClient from '../../utils/surge-client'
 import {type ModelType} from '../store'
 import {execution} from '@remix-project/remix-lib'
 // @ts-expect-error
@@ -45,11 +45,28 @@ const Model: ModelType = {
     },
   },
   effects: {
-    *deploy({payload}, {select}) {
-      yield surgeClient.login({
-        user: payload.email,
-        password: payload.password,
+    *saveIntro({payload}, {select, put}) {
+      const abi = yield select((state) => state.instance.abi)
+
+      yield put({
+        type: 'instance/save',
+        payload: {
+          abi: abi.map((item) => {
+            return {...item, intro: item.id === payload.id ? payload.intro : item.intro}
+          }),
+        },
       })
+    },
+    *deploy({payload}, {select}) {
+      try {
+        yield surgeClient.login({
+          user: payload.email,
+          password: payload.password,
+        })
+      } catch (error) {
+        return {code: 'ERROR', error: error.message}
+      }
+
       // const {data} = yield axios.get('https://remix-dapp.surge.sh/manifest.json')
       // const {file, css, assets} = data['index.html']
       // const paths = [file, ...css, ...assets]
@@ -65,14 +82,20 @@ const Model: ModelType = {
       //   files['dir/index.html'] = files['dir/index.html'].replace(`/${path}`, `https://remix-dapp.surge.sh/${path}`)
       // }
 
-      yield surgeClient.publish({
-        files,
-        domain: `${payload.subdomain}.surge.sh`,
-        onProgress: ({id, progress, file}: {id: string; progress: number; file: string}) => {
-          console.log({id, progress, file})
-        },
-        onTick: (tick: string) => {},
-      })
+      try {
+        yield surgeClient.publish({
+          files,
+          domain: `${payload.subdomain}.surge.sh`,
+          onProgress: ({id, progress, file}: {id: string; progress: number; file: string}) => {
+            console.log({id, progress, file})
+          },
+          onTick: (tick: string) => {},
+        })
+      } catch (error) {
+        return {code: 'ERROR', error: 'this domain belongs to someone else'}
+      }
+
+      return {code: 'SUCCESS', error: ''}
     },
   },
 }

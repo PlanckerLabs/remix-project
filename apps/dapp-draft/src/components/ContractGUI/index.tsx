@@ -1,5 +1,6 @@
 import {execution} from '@remix-project/remix-lib'
 import React, {useEffect, useState} from 'react'
+import {useAppDispatch} from '../../redux/hooks'
 
 const txHelper = execution.txHelper
 
@@ -11,6 +12,7 @@ const getFuncABIInputs = (funABI: any) => {
 }
 
 export function ContractGUI(props: {funcABI: any}) {
+  const dispatch = useAppDispatch()
   const isConstant = props.funcABI.constant !== undefined ? props.funcABI.constant : false
   const lookupOnly = props.funcABI.stateMutability === 'view' || props.funcABI.stateMutability === 'pure' || isConstant
   const inputs = getFuncABIInputs(props.funcABI)
@@ -56,7 +58,7 @@ export function ContractGUI(props: {funcABI: any}) {
   }, [lookupOnly, props.funcABI, title])
 
   return (
-    <div className={`udapp_contractProperty ${(props.funcABI.inputs && props.funcABI.inputs.length > 0) || props.funcABI.type === 'fallback' || props.funcABI.type === 'receive' ? 'udapp_hasArgs' : ''}`}>
+    <div className={`d-inline-block udapp_contractProperty ${(props.funcABI.inputs && props.funcABI.inputs.length > 0) || props.funcABI.type === 'fallback' || props.funcABI.type === 'receive' ? 'udapp_hasArgs' : ''}`}>
       <div className="udapp_contractActionsContainerSingle p-2" style={{display: 'flex'}}>
         <div className="d-flex btn p-0 wrapperElement" data-id={buttonOptions.dataId} data-title={buttonOptions.title}>
           <button disabled className={`udapp_instanceButton text-nowrap overflow-hidden text-truncate btn btn-sm ${buttonOptions.classList}`} data-id={buttonOptions.dataId} data-title={buttonOptions.title} style={{pointerEvents: 'none'}}>
@@ -72,6 +74,15 @@ export function ContractGUI(props: {funcABI: any}) {
           style={{
             height: '2rem',
             visibility: !((props.funcABI.inputs && props.funcABI.inputs.length > 0) || props.funcABI.type === 'fallback' || props.funcABI.type === 'receive') ? 'hidden' : 'visible',
+          }}
+        />
+      </div>
+      <div className="p-2">
+        <textarea
+          className="form-control"
+          placeholder="enter an introduction for this function"
+          onBlur={(e) => {
+            dispatch({type: 'instance/saveIntro', payload: {id: props.funcABI.id, intro: e.target.value}})
           }}
         />
       </div>

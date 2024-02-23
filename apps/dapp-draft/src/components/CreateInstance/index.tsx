@@ -7,6 +7,7 @@ const CreateInstance: React.FC = () => {
   const dispatch = useAppDispatch()
   return (
     <Form
+      className="w-50 m-auto"
       onSubmit={(e: any) => {
         e.preventDefault()
         dispatch({type: 'instance/init', payload: {...formVal}})
@@ -33,7 +34,11 @@ const CreateInstance: React.FC = () => {
           placeholder="Enter abi"
           value={formVal.abi.length > 0 ? JSON.stringify(formVal.abi) : ''}
           onChange={(e) => {
-            setFormVal({...formVal, abi: JSON.parse(e.target.value)})
+            let abi = []
+            try {
+              abi = JSON.parse(e.target.value)
+            } catch (error) {}
+            setFormVal({...formVal, abi})
           }}
         />
       </Form.Group>
@@ -61,7 +66,7 @@ const CreateInstance: React.FC = () => {
           }}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" disabled={!formVal.address || !formVal.name || !formVal.network || !formVal.abi.length}>
         Submit
       </Button>
     </Form>

@@ -21,7 +21,7 @@ export interface ModelType {
         delay: typeof delay
         select: typeof select
       }
-    ) => Generator<any, void, any>
+    ) => Generator<any, any, any>
   >
 }
 

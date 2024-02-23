@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import {Form, Button} from 'react-bootstrap'
-import {useAppDispatch} from '../../redux/hooks'
+import {Form, Button, Alert} from 'react-bootstrap'
+import {useAppDispatch, useAppSelector} from '../../redux/hooks'
 
 function DeployPanel(): JSX.Element {
   const [formVal, setFormVal] = useState({email: '', password: '', subdomain: ''})
+  const [deployState, setDeployState] = useState({code: '', error: ''})
+  const loading = useAppSelector((state) => state.loading['instance/deploy'])
   const dispatch = useAppDispatch()
   return (
     <div className="col-3 d-inline-block">
@@ -15,6 +17,7 @@ function DeployPanel(): JSX.Element {
         Reset
       </Button>
       <Button
+        className="ml-3"
         onClick={() => {
           dispatch({type: 'instance/empty'})
         }}
@@ -24,7 +27,13 @@ function DeployPanel(): JSX.Element {
       <Form
         onSubmit={(e) => {
           e.preventDefault()
-          dispatch({type: 'instance/deploy', payload: formVal})
+          dispatch({
+            type: 'instance/deploy',
+            payload: formVal,
+            callback: (state) => {
+              setDeployState(state)
+            },
+          })
         }}
       >
         <Form.Group className="mb-3" controlId="formEmail">
@@ -63,9 +72,21 @@ function DeployPanel(): JSX.Element {
             }}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
+        <Button variant="primary" type="submit" disabled={!formVal.email || !formVal.password || !formVal.subdomain}>
+          {loading && <i className="fas fa-spinner fa-spin mr-1"></i>}Submit
         </Button>
+        {deployState.code === 'SUCCESS' && (
+          <Alert variant="success" className="mt-4">
+            Deployed successfully! <br /> Click the link below to view your dapp
+            <br />
+            <a target="_blank" href={`https://${formVal.subdomain}.surge.sh`}>{`https://${formVal.subdomain}.surge.sh`}</a>
+          </Alert>
+        )}
+        {deployState.error && (
+          <Alert variant="danger" className="mt-4">
+            {deployState.error}
+          </Alert>
+        )}
       </Form>
     </div>
   )
