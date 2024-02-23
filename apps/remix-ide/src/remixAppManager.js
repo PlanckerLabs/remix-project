@@ -388,7 +388,7 @@ class PluginLoader {
         localStorage.setItem('workspace', JSON.stringify(saved))
       },
       get: () => {
-        return JSON.parse(localStorage.getItem('workspace')).filter(item => item !== 'dapp-draft')
+        return JSON.parse(localStorage.getItem('workspace') || '[]').filter(item => item !== 'dapp-draft')
       }
     }
 
