@@ -1,8 +1,8 @@
 import * as semver from 'semver'
 /* global Worker */
 
-export const baseURLBin = 'https://binaries.soliditylang.org/bin'
-export const baseURLWasm = 'https://binaries.soliditylang.org/wasm'
+export const baseURLBin = 'https://remix-assets.learnblockchain.cn/soliditylang/bin'
+export const baseURLWasm = 'https://remix-assets.learnblockchain.cn/soliditylang/wasm'
 
 export const pathToURL = {}
 

@@ -86,7 +86,7 @@ commander
     const compilerConfig = {} as CompilerConfiguration
     if (options.compiler) {
       const compVersion = options.compiler
-      const baseURL = 'https://binaries.soliditylang.org/wasm/'
+      const baseURL = 'https://remix-assets.learnblockchain.cn/soliditylang/wasm/'
       const response: AxiosResponse = await axios.get(baseURL + 'list.json')
       const { releases, latestRelease } = response.data as { releases: string[], latestRelease: string }
       const compString = releases ? releases[compVersion] : null

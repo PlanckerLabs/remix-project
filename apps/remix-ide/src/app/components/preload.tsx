@@ -120,8 +120,9 @@ export const Preload = (props: any) => {
   return (
     <>
       <div className="preload-container">
-        <div className="preload-logo pb-4">
-          {logo}
+        <div className="preload-logo pb-4" style={{textAlign: 'center'}}>
+          {/* {logo} */}
+          <img className="" src="assets/img/remix_logo_light.webp" style={{height: '8rem'}} alt="" />
           <div className="info-secondary splash">
             REMIX IDE
             <br />
