@@ -39,6 +39,7 @@ module.exports = {
         'acceptSslCerts': true,
         'goog:chromeOptions': {
           args: [
+            '--proxy-server=socks5://127.0.0.1:7890',
             'window-size=2560,1440',
             '--no-sandbox',
             '--headless=new',
@@ -56,7 +57,7 @@ module.exports = {
         'javascriptEnabled': true,
         'acceptSslCerts': true,
         'goog:chromeOptions': {
-          args: ['window-size=2560,1440', 'start-fullscreen', '--no-sandbox', '--verbose']
+          args: ['--proxy-server=socks5://127.0.0.1:7890', 'window-size=2560,1440', 'start-fullscreen', '--no-sandbox', '--verbose']
         }
       }
     },
@@ -67,7 +68,7 @@ module.exports = {
         'javascriptEnabled': true,
         'acceptSslCerts': true,
         'goog:chromeOptions': {
-          args: ['window-size=2560,1440', '--no-sandbox', '--verbose']
+          args: ['--proxy-server=socks5://127.0.0.1:7890', 'window-size=2560,1440', '--no-sandbox', '--verbose']
           ,extensions: [metamaskExtension]
         }
       }
@@ -79,7 +80,7 @@ module.exports = {
         'javascriptEnabled': true,
         'acceptSslCerts': true,
         'goog:chromeOptions': {
-          args: ['window-size=2560,1440', 'start-fullscreen', '--no-sandbox', '--headless', '--verbose'],
+          args: ['--proxy-server=socks5://127.0.0.1:7890', 'window-size=2560,1440', 'start-fullscreen', '--no-sandbox', '--headless', '--verbose'],
           extensions: [metamaskExtension]
         }
       }

@@ -50,7 +50,7 @@ export class LocaleModule extends Plugin {
     currentLocale = currentLocale && currentLocale.toLocaleLowerCase()
     currentLocale = this.locales[currentLocale] ? currentLocale : null
     this.currentLocaleState = { queryLocale, currentLocale }
-    this.active = queryLocale || currentLocale || 'en'
+    this.active = queryLocale || currentLocale || 'zh'
     this.forced = !!queryLocale
     this.queryParams.update({ lang: this.active })
   }

@@ -31,6 +31,11 @@ module.exports = {
 
     'firefoxDesktop': {
       desiredCapabilities: {
+        'proxy': {
+          proxyType: 'MANUAL',
+          httpProxy: 'socks5://127.0.0.1:7890',
+          sslProxy: 'socks5://127.0.0.1:7890'
+        },
         'browserName': 'firefox',
         'javascriptEnabled': true,
         'acceptSslCerts': true,
@@ -42,6 +47,11 @@ module.exports = {
 
     'firefox': {
       desiredCapabilities: {
+        'proxy': {
+          proxyType: 'MANUAL',
+          httpProxy: 'socks5://127.0.0.1:7890',
+          sslProxy: 'socks5://127.0.0.1:7890'
+        },
         'browserName': 'firefox',
         'javascriptEnabled': true,
         'acceptSslCerts': true,

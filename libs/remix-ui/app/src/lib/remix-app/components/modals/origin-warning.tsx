@@ -17,7 +17,7 @@ const OriginWarning = () => {
       setContent('Welcome to the Remix alpha instance. Please use it to try out latest features. But use preferably https://remix.ethereum.org for any production work.')
     } else if (
       window.location.protocol.indexOf('http') === 0 &&
-      window.location.hostname !== 'remix.ethereum.org' &&
+      window.location.hostname !== 'remix.learnblockchain.cn' &&
       window.location.hostname !== 'localhost' &&
       window.location.hostname !== '127.0.0.1'
     ) {
