@@ -15,7 +15,7 @@ defaultVersion=$(grep '"defaultVersion"' package.json | awk -F '"' '{print $4}')
 echo "Specified version from package.json: $defaultVersion"
 
 # Download the list.json file containing available versions
-curl -s https://binaries.soliditylang.org/wasm/list.json > list.json
+curl -s https://remix-assets.learnblockchain.cn/soliditylang/wasm/list.json > list.json
 
 # Use jq to extract the path for the specified version from the builds array
 check=$(grep "\"$defaultVersion\"" list.json)
@@ -25,7 +25,7 @@ if [ -z "$check" ]; then
 fi
 
 echo "Path for the specified version: $defaultVersion"
-fullPath="https://binaries.soliditylang.org/bin/$defaultVersion"
+fullPath="https://remix-assets.learnblockchain.cn/soliditylang/bin/$defaultVersion"
 echo "Download fullPath: $fullPath"
 
 # Ensure the target directory exists
