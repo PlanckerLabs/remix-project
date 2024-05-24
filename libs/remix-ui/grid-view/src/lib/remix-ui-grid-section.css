@@ -21,6 +21,6 @@
 }
 
 * {
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   scrollbar-color: var(--bg-dark) var(--bg-light);
 }
