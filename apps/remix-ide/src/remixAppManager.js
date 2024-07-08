@@ -156,7 +156,7 @@ export class RemixAppManager extends PluginManager {
   constructor() {
     super()
     this.event = new EventEmitter()
-    this.pluginsDirectory = 'https://remix-assets.learnblockchain.cn/remix-plugins-directory/metadata.json'
+    this.pluginsDirectory = 'https://remix-assets.learnblockchain.cn/remix-plugins-directory/metadata_test.json'
     this.pluginLoader = new PluginLoader()
     if (Registry.getInstance().get('platform').api.isDesktop()) {
       requiredModules = [...requiredModules, 'fs', 'electronTemplates', 'isogit', 'remix-templates', 'electronconfig', 'xterm', 'compilerloader', 'ripgrep']
